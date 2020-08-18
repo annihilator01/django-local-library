@@ -1,0 +1,57 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Book List</h1>
+
+    {% if books %}
+        <ul id="books">
+
+            {% for book in books %}
+                <ul id="book">
+                    <li>
+                        <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
+                        ({{ book.author }})
+                    </li>
+
+                    {% if perms.catalog.can_mark_returned %}
+                        <li id="actions">
+                            <ul id="actions">
+                                <li><a href="{% url 'book-update' book.pk %}">Update</a></li>
+                                <li><a href="{% url 'book-delete' book.pk %}">Delete</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endfor %}
+
+        </ul>
+    {% else %}
+        <p>There are no books in the library.</p>
+    {% endif %}
+
+    <style>
+        ul#books {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#book {
+            list-style-type: disc;
+            padding: 5px;
+        }
+
+        ul#actions {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#actions li {
+            display: inline;
+        }
+
+        li#actions {
+            list-style-type: none;
+        }
+    </style>
+{% endblock %}

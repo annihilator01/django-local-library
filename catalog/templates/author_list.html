@@ -1,0 +1,60 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Author List</h1>
+
+    {% if authors %}
+        <ul id="authors">
+
+            {% for author in authors %}
+                <ul id="author">
+                    <li>
+                        <a href="{{ author.get_absolute_url }}">
+                            {{ author.last_name }}, {{ author.first_name }}
+                            ({{ author.date_of_birth }}{% if author.date_of_death %} -
+                            {{ author.date_of_death }}{% endif %})
+                        </a>
+                    </li>
+
+                    {% if perms.catalog.can_mark_returned %}
+                        <li id="actions">
+                            <ul id="actions">
+                                <li><a href="{% url 'author-update' author.pk %}">Update</a></li>
+                                <li><a href="{% url 'author-delete' author.pk %}">Delete</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endfor %}
+
+        </ul>
+    {% else %}
+        <p>There are no authors in the library.</p>
+    {% endif %}
+
+    <style>
+        ul#authors {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#author {
+            list-style-type: disc;
+            padding: 5px;
+        }
+
+        ul#actions {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#actions li {
+            display: inline;
+        }
+
+        li#actions {
+            list-style-type: none;
+        }
+    </style>
+{% endblock %}
