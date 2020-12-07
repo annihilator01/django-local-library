@@ -1,4 +1,4 @@
-# django-local-library
+# Django Local Library
 Local Library website written in Django
 
 **[Link to website.](https://polar-mountain-73619.herokuapp.com)**
